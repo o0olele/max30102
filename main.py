@@ -7,6 +7,8 @@ parser.add_argument("-r", "--raw", action="store_true",
                     help="print raw data instead of calculation result")
 parser.add_argument("-t", "--time", type=int, default=30,
                     help="duration in seconds to read from sensor, default 30")
+parser.add_argument("-s", "--show", action="store_true",
+                    help="show spo2 data using matplotlib")
 args = parser.parse_args()
 
 print('sensor starting...')
@@ -18,4 +20,7 @@ except KeyboardInterrupt:
     print('keyboard interrupt detected, exiting...')
 
 hrm.stop_sensor()
+
+if args.show:
+    hrm.show()
 print('sensor stoped!')
