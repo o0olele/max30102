@@ -11,10 +11,13 @@ The original code is a Python port based on Maxim's reference design written to
 run on an Arduino UNO: https://github.com/MaximIntegratedRefDesTeam/RD117_ARDUINO/
 
 ## Setup
-A couple non-standard Python libraries are required: `smbus` and `numpy`. I recommend
-installing the `numpy` library with apt as opposed to pip since pip takes a really
-long time.
-`sudo apt install python-numpy`
+A couple non-standard Python libraries are required: `smbus2` and `numpy`. 
+```
+pip install RPI.GPIO smbus2 numpy
+# data view
+pip install matplotlib scipy 
+# add -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 ## Use as a script
 
@@ -32,6 +35,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -r, --raw             print raw data instead of calculation result
   -t TIME, --time TIME  duration in seconds to read from sensor, default 30
+  -s, --show            show spo2 data using matplotlib
 ```
 
 ## Use as a library
