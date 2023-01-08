@@ -1,4 +1,3 @@
-
 from max30102 import MAX30102
 import hrcalc
 import threading
@@ -25,6 +24,10 @@ class HeartRateMonitor(object):
         ir_data = []
         red_data = []
         bpms = []
+        
+        # data for show
+        self.spos = []
+        self.bpms = []
 
         # run until told to stop
         while not self._thread.stopped:
@@ -57,6 +60,10 @@ class HeartRateMonitor(object):
                                 print("Finger not detected")
                         if self.print_result:
                             print("BPM: {0}, SpO2: {1}".format(self.bpm, spo2))
+                            
+                        if spo2 > 0:
+                            self.bpms.append(self.bpm)
+                            self.spos.append(spo2)
 
             time.sleep(self.LOOP_TIME)
 
@@ -71,3 +78,15 @@ class HeartRateMonitor(object):
         self._thread.stopped = True
         self.bpm = 0
         self._thread.join(timeout)
+
+    def show(self):
+        import matplotlib.pyplot as plt
+        from scipy.signal import savgol_filter
+        
+        x = np.arange(len(self.spos))
+        y = np.array(self.spos)
+    
+        yhat = savgol_filter(y, 51, 3)
+    
+        plt.plot(x, yhat)
+        plt.show()
